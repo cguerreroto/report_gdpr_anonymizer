@@ -1,0 +1,18 @@
+\section{Project workflow setup}
+\label{sec:workflow}
+
+\subsection{Version control and pull requests}
+
+The repository follows GitHub Flow: short-lived branches are created from \texttt{main}, changes are committed in focused units, and integration occurs through pull requests that reference issues where applicable \cite{GitHubFlow}. The contribution guide documents issue templates for bugs and feature requests, a pull-request checklist, and the expectation that \texttt{make test} passes before review \cite{ContributingGDPR}.
+
+During early refactoring, some changes landed directly on \texttt{main} before branch protection and formal review were in place. Later work adopts the documented PR workflow. A maintainer checklist for branch protection and required status checks is kept locally and mirrors the settings described in the contribution guide.
+
+\subsection{Continuous integration}
+
+GitHub Actions workflow \texttt{ci.yml} runs on push and pull request to \texttt{main} \cite{CIGDPR}. Python jobs use a matrix over both packages (\texttt{extractor/yolo\_raw\_extractor} and \texttt{segmentator/ml\_pipeline}) on Ubuntu with \texttt{uv sync --group dev} followed by \texttt{pytest --cov}. Rust jobs install Linux GUI dependencies, then run \texttt{cargo test} and \texttt{cargo clippy -- -D warnings} in \texttt{segmentator}. Coverage XML artifacts are uploaded but no minimum percentage gate is enforced.
+
+The root \texttt{Makefile} exposes the same commands for local verification: \texttt{make test}, \texttt{make lint}, \texttt{make fmt}, and \texttt{make coverage}. This duplication keeps developer commands aligned with CI without requiring contributors to memorise per-package paths.
+
+\subsection{Repository presentation}
+
+The public GitHub repository serves as the project face: a structured README, PolyForm Noncommercial License~1.0.0 \cite{PolyFormNC}, \texttt{AUTHORS.md}, dependency lockfiles, and \texttt{.gitignore} rules that exclude datasets, weights, and local documentation. Large binaries and sensitive paths are never committed; callers supply dataset and run directories on the command line.

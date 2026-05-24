@@ -1,0 +1,40 @@
+\section{Unit testing and coverage}
+\label{sec:testing}
+
+\subsection{Test layout}
+
+Automated tests are organised in three suites documented in \texttt{tests/README.md} \cite{TestsGDPR}. The Rust segmentator exposes five unit tests in \texttt{dataset.rs} via \texttt{cargo test}. The extractor package contains 126 \texttt{pytest} cases under \texttt{extractor/yolo\_raw\_extractor/tests}. The ML pipeline package contains 291 \texttt{pytest} cases under \texttt{segmentator/ml\_pipeline/tests}. In total, 422 automated tests run from the repository root through \texttt{make test}.
+
+Tests follow the arrange--act--assert pattern. Filesystem fixtures prefer \texttt{tmp\_path}. External stacks such as Ultralytics, OpenCV, and NumPy are not loaded in the default development or CI environment for \texttt{ml\_pipeline}; instead, factory injection, \texttt{pytest} \texttt{monkeypatch}, and shared fakes in \texttt{tests/fakes.py} exercise video blur, export, training, and validation code paths without downloading \texttt{.pt} weights or committing video fixtures \cite{UnittestMock,TestsGDPR}.
+
+\subsection{\texttt{make test} versus \texttt{make coverage}}
+
+These targets answer different questions. \texttt{make test} invokes \texttt{pytest} and \texttt{cargo test} without coverage instrumentation. The terminal output reports pass or fail counts and a compact per-file progress line for Python. It does not list line percentages.
+
+\texttt{make coverage} runs \texttt{pytest --cov} in both Python packages with branch coverage enabled in each \texttt{pyproject.toml} \cite{PytestCov,CoveragePy}. The terminal report lists statement counts, missed lines, partial branches, and percentages per module, and writes HTML and XML reports under each package. CI Python jobs also pass \texttt{--cov} and upload \texttt{coverage.xml}, but they do not fail when coverage falls below a threshold. Rust coverage is optional through \texttt{cargo llvm-cov} and is excluded from \texttt{make coverage}.
+
+\subsection{Coverage evolution in three phases}
+
+Coverage was measured at three repository states by running the same \texttt{pytest --cov} commands after checking out each milestone. Cover1 marks the initial suite with \texttt{pytest-cov} wired (205 Python tests). Cover2 marks the expanded unit-test set immediately before systematic mocking of heavy imports (350 Python tests). Cover3 marks the current tree after mock-based tests closed remaining gaps (417 Python tests).
+
+At Cover1, package totals were 82\% for \texttt{ml\_pipeline} and 41\% for the extractor. Modules that depend on OpenCV or Ultralytics, especially \texttt{video.py} at 55\%, remained largely untested because the dev install omits those dependencies. Cover2 raised totals to 90\% and 89\% through broader CLI and driver tests with stub factories, but \texttt{video.py} stayed at 60\% because real \texttt{cv2} and \texttt{numpy} imports were still avoided. Cover3 applied standard-library \texttt{unittest.mock} patterns together with \texttt{monkeypatch} to register lightweight fake modules before lazy imports run. Package totals reached 97\% while \texttt{video.py} rose to 95\% and \texttt{validate.py} to 99\%, without adding GPU hardware or binary fixtures to the repository.
+
+Table~\ref{tab:coverage_summary} summarises package-level results. Module-level percentages for both Python packages are listed in Appendix~\ref{app:coverage_tables}. Rows with the largest Cover2 to Cover3 gains (\texttt{video.py}, \texttt{validate.py}, \texttt{cli\_dataset\_yaml.py}, \texttt{export.py}) correspond to code paths that were previously reachable only when optional ML stacks were installed.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{tabular}{@{}l r c c c c@{}}
+\hline
+\textbf{Phase} & \textbf{pytest cases} & \textbf{ml\_pipeline} & \textbf{extractor} & \textbf{video.py} & \textbf{validate.py} \\
+\hline
+Cover1 (initial suite) & 205 & 82\% & 41\% & 55\% & 87\% \\
+Cover2 (pre-mocking) & 350 & 90\% & 89\% & 60\% & 87\% \\
+Cover3 (after mocking) & 417 & 97\% & 97\% & 95\% & 99\% \\
+\hline
+\end{tabular}
+\caption{Summary of Python test counts and coverage at three repository milestones. Rust segmentator tests (five cases) are excluded.}
+\label{tab:coverage_summary}
+\end{table}
+
+The Rust segmentator suite is not included in \texttt{make coverage}. All suites pass under \texttt{make test} on the current tree.

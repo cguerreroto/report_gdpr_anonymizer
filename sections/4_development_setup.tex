@@ -1,0 +1,18 @@
+\section{Project development setup}
+\label{sec:devsetup}
+
+\subsection{Virtual environments and dependencies}
+
+Each Python package is installed in isolation with \texttt{uv sync} from its directory \cite{AstralUV}. Development tools (\texttt{pytest}, \texttt{pytest-cov}, \texttt{py-spy}) are pulled in via \texttt{--group dev}. Machine-learning commands require \texttt{uv sync --extra train}; ONNX export adds \texttt{--extra export}. Lockfiles are committed so reproducible installs are available on Linux CI runners and on local macOS workstations. A platform setup script under gitignored \texttt{local/} automates Rust, \texttt{uv}, and initial test execution for macOS contributors.
+
+The Rust segmentator is built with \texttt{cargo build --release}. The pinned toolchain version is declared in \texttt{segmentator/Cargo.toml}.
+
+\subsection{Integrated development environment}
+
+Day-to-day editing is performed in a Visual Studio Code-compatible editor with the Rust Analyzer extension for the segmentator crate and the Python extension for both \texttt{uv} projects. Integrated terminals run \texttt{uv run} and \texttt{cargo} tasks from the repository root or from package subdirectories. This layout supports quick navigation between Rust UI code, Python CLIs, and their respective test suites.
+
+\subsection{Linters, formatters, and profiling}
+
+Rust sources are formatted with \texttt{cargo fmt} and checked with \texttt{cargo clippy -- -D warnings}, matching the CI job. Python modules follow the naming and typing conventions of surrounding code; no separate Python linter gate is configured in CI at present.
+
+Optional profiling is documented in \texttt{PERFORMANCE.md}: Python \texttt{cProfile} and \texttt{py-spy} for extractor and pipeline stages, and \texttt{cargo flamegraph} for the segmentator when UI responsiveness must be investigated. Profiling remains a local concern and is not part of the default test workflow.

@@ -1,0 +1,18 @@
+\section{Language and library choices}
+\label{sec:languages}
+
+The repository combines Rust and Python because annotation, machine-learning orchestration, and video I/O impose different constraints on responsiveness, dependency weight, and ecosystem access.
+
+\subsection{Rust segmentator}
+
+The desktop segmentator is implemented in Rust with \texttt{egui} and \texttt{eframe}. This stack was selected for a native polygon editor that watches dataset folders, refreshes image lists, and serialises YOLO segmentation labels beside each image with low UI latency. Dataset discovery, label parsing, and file watching are concentrated in \texttt{segmentator/src/dataset.rs}. Unit tests for label I/O live in inline \texttt{\#[cfg(test)]} modules next to the code they exercise.
+
+\subsection{Python extractor and ML pipeline}
+
+Two independent Python packages are managed with \texttt{uv}, each with its own \texttt{pyproject.toml} and lockfile. The extractor under \texttt{extractor/yolo\_raw\_extractor} targets Python~3.13 and handles frame extraction, segment cropping, and dataset augmentation. The ML pipeline under \texttt{segmentator/ml\_pipeline} targets Python~3.11 for compatibility with Ultralytics and PyTorch.
+
+Training, validation, prediction, export, and video blur depend on the optional \texttt{[train]} extra (Ultralytics YOLO26-seg). ONNX export additionally requires the \texttt{[export]} extra. Layout and YAML utilities install after a plain \texttt{uv sync} without those extras, which keeps continuous integration lightweight. Video anonymisation reads and writes frames through OpenCV in \texttt{video.py}. Dataset hygiene, cleaning, iteration wrappers, and metric interpretation remain in standard-library-oriented modules with small, testable CLI entry points.
+
+\subsection{Rationale for a hybrid layout}
+
+Interactive labelling benefits from a compiled desktop application, whereas model training and batch CLIs benefit from the Python machine-learning ecosystem. The design replaces monolithic notebooks with path-based commands that can be composed in shell scripts or documented pipelines, which aligns with reproducibility goals emphasised in the course material on clean code and pipelining.
