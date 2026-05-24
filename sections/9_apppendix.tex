@@ -1,0 +1,133 @@
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+%	Appendices (order matches first citation in the main text: Results, then Discussion)
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+\newcommand{\appendixcaptionsuffix}{%
+  \emph{Abbreviations:} AE: autoencoder; GA: genetic algorithm; PSO: particle swarm optimisation; MSE: mean squared error; Mem: memory usage; PSNR: peak signal-to-noise ratio; SSIM: structural similarity index measure; Time: wall-clock runtime.}
+
+\section{Numerical results (tables)}
+\label{sec:results_tables}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{llcccccc}
+\hline
+Method & Mode & SSIM$_{c}$ $\uparrow$ & SSIM$_{n}$ $\uparrow$ & PSNR $\uparrow$ & MSE $\downarrow$ & Time $\downarrow$ & Mem $\downarrow$ \\
+\hline
+AE  & Blind  & 0.350 $\pm$ 0.001 & 0.965 $\pm$ 0.001 & 22.4 $\pm$ 0.1 & 0.0057 $\pm$ 0.0001 & 292.8 $\pm$ 2.1 & 1234 $\pm$ 7 \\
+AE  & Hybrid & \textbf{0.809 $\pm$ 0.008} & 0.908 $\pm$ 0.005 & \textbf{28.8 $\pm$ 0.2} & \textbf{0.0013 $\pm$ 0.0001} & 298.8 $\pm$ 23.3 & 1239 $\pm$ 12 \\
+GA  & Blind  & 0.241 $\pm$ 0.001 & \textbf{0.999 $\pm$ 0.000} & 17.0 $\pm$ 0.0 & 0.0199 $\pm$ 0.0000 & 83.3 $\pm$ 1.4 & 616 $\pm$ 17 \\
+GA  & Hybrid & 0.257 $\pm$ 0.005 & \textbf{0.999 $\pm$ 0.000} & 17.8 $\pm$ 0.1 & 0.0167 $\pm$ 0.0003 & \textbf{70.6 $\pm$ 1.3} & 609 $\pm$ 2 \\
+PSO & Blind  & 0.318 $\pm$ 0.039 & 0.988 $\pm$ 0.006 & 20.6 $\pm$ 0.8 & 0.0086 $\pm$ 0.0015 & 139.6 $\pm$ 56.9 & \textbf{545 $\pm$ 22} \\
+PSO & Hybrid & 0.340 $\pm$ 0.013 & 0.986 $\pm$ 0.005 & 21.1 $\pm$ 0.4 & 0.0075 $\pm$ 0.0007 & 145.3 $\pm$ 50.5 & 563 $\pm$ 39 \\
+\hline
+\end{tabular}
+\caption{Global comparison of the evaluated denoising methods. SSIM$_c$ denotes SSIM between the estimate and the clean image, while SSIM$_n$ denotes SSIM between the estimate and the noisy input. Results are reported as mean $\pm$ standard deviation.\protect\appendixcaptionsuffix}
+\label{tab:global_results_compact}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{llcccccc}
+\hline
+Method & Mode & SSIM$_{c}$ $\uparrow$ & SSIM$_{n}$ $\uparrow$ & PSNR $\uparrow$ & MSE $\downarrow$ & Time $\downarrow$ & Mem $\downarrow$ \\
+\hline
+GA  & Blind  & 0.241 $\pm$ 0.001 & 0.999 $\pm$ 0.000 & 17.0 $\pm$ 0.0 & 0.0199 $\pm$ 0.0000 & 251.5 $\pm$ 0.0 & 228 $\pm$ 0 \\
+GA  & Hybrid & 0.260 $\pm$ 0.002 & 0.999 $\pm$ 0.000 & 17.9 $\pm$ 0.1 & 0.0164 $\pm$ 0.0001 & 247.8 $\pm$ 1.2 & 229 $\pm$ 1 \\
+PSO & Blind  & 0.373 $\pm$ 0.006 & 0.988 $\pm$ 0.001 & 21.9 $\pm$ 0.1 & 0.0064 $\pm$ 0.0001 & 436.2 $\pm$ 12.1 & 210 $\pm$ 3 \\
+PSO & Hybrid & \textbf{0.533 $\pm$ 0.007} & 0.963 $\pm$ 0.003 & \textbf{25.1 $\pm$ 0.1} & \textbf{0.0031 $\pm$ 0.0001} & 430.5 $\pm$ 14.7 & \textbf{205 $\pm$ 2} \\
+\hline
+\end{tabular}
+\caption{Patchwise comparison of GA and PSO methods. SSIM$_c$ denotes SSIM between the estimate and the clean image, while SSIM$_n$ denotes SSIM between the estimate and the noisy input. Results are reported as mean $\pm$ standard deviation.\protect\appendixcaptionsuffix}
+\label{tab:patchwise_results}
+\end{table}
+
+
+\section{Runtime overview (bar chart)}
+\label{sec:runtime_bars}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/runtime_bars.png}
+  \caption{Mean wall-clock runtime by method and mode (global \emph{vs.\ }patchwise where applicable). The chart mirrors the Time column in Tables~\ref{tab:global_results_compact} and~\ref{tab:patchwise_results} and highlights relative computational cost at a glance. The autoencoder appears in global mode only: a patchwise AE would require training a separate model per patch, which conflicts with the usual end-to-end convolutional autoencoder objective and would imply prohibitive aggregate training time, so we omit that bar. GA and PSO remain reported in both geometries because patchwise search does not entail retraining a network for each tile.\protect\appendixcaptionsuffix}
+  \label{fig:runtime_bars}
+\end{figure}
+
+
+\section{Denoised images: visual comparisons}
+\label{sec:denoised_images}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/B_u_v_best_AE_GA_PSO_final.png}
+  \caption{Best denoised output per method. From left to right: clean reference $u$, noisy input $v$, AE hybrid (1000 epochs, $\mathrm{SSIM}_c = 0.809$), GA hybrid patchwise ($\mathrm{SSIM}_c = 0.260$), PSO hybrid patchwise ($\mathrm{SSIM}_c = 0.533$).\protect\appendixcaptionsuffix}
+  \label{fig:best_denoised}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{images/B_composite_ga_global_vs_patchwise.png}
+  \caption{GA search approach compared in hybrid mode. From left to right: clean reference $u$, noisy input $v$, GA global ($\mathrm{SSIM}_c = 0.257$), GA patchwise ($\mathrm{SSIM}_c = 0.260$). While the metric gain is negligible, a subtle visual improvement is nonetheless perceptible.\protect\appendixcaptionsuffix}
+  \label{fig:ga_global_patchwise}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{images/B_composite_pso_global_vs_patchwise.png}
+  \caption{PSO search approach compared in hybrid mode. From left to right: clean reference $u$, noisy input $v$, PSO global ($\mathrm{SSIM}_c = 0.340$), PSO patchwise ($\mathrm{SSIM}_c = 0.533$). The patchwise decomposition yields a substantial improvement in both metrics and visual quality.\protect\appendixcaptionsuffix}
+  \label{fig:pso_global_patchwise}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{images/B_composite_ae_blind_vs_hybrid.png}
+  \caption{Autoencoder denoising modes compared. From left to right: clean reference $u$, noisy input $v$, AE blind ($\mathrm{SSIM}_c = 0.350$), AE hybrid ($\mathrm{SSIM}_c = 0.809$). All outputs correspond to seed s11, 1000 epochs.\protect\appendixcaptionsuffix}
+  \label{fig:ae_blind_hybrid}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{images/B_composite_ae_e1000_hybrid_seed_consistency.png}
+  \caption{Seed consistency of the AE in hybrid mode (1000 epochs). From left to right: clean reference $u$, noisy input $v$, seed s11, seed s22, seed s33. The near-identical outputs confirm low stochastic variability ($\mathrm{SSIM}_c = 0.809 \pm 0.008$).\protect\appendixcaptionsuffix}
+  \label{fig:ae_seeds}
+\end{figure}
+
+
+\section{Quality \emph{vs.\ }runtime scatter plots}
+\label{sec:plots}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/A_quality_vs_runtime_blind.png}
+        \caption*{(a)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/A_quality_vs_runtime_hybrid.png}
+        \caption*{(b)}
+    \end{subfigure}
+    \caption{\textbf{Quality \emph{vs.\ }runtime scatter plots.} Runtime \emph{vs.\ }reconstruction quality under blind loss~(a) and hybrid loss~(b). Each point represents one run (seed); colour encodes the method (blue: AE, green: GA, orange: PSO), and marker fill encodes the search geometry (filled: global, outline: patchwise). The dashed vertical line marks the noisy baseline $\mathrm{SSIM}(v, u) = 0.350$. Under blind loss, all methods cluster near the baseline, consistent with the trivial solution $\hat{u} \approx v$. Under hybrid loss, the autoencoder achieves substantially higher quality, while PSO patchwise reaches $\mathrm{SSIM}_c = 0.533$ and GA remains near the baseline regardless of search geometry.\protect\appendixcaptionsuffix}
+    \label{fig:loss_plots}
+\end{figure}
+
+\newpage
+\section{Classical full-reference metrics (MSE and PSNR)}
+\label{app:mse_psnr}
+
+This appendix records standard pixelwise measures used only for benchmarking when a ground-truth image $u$ and an estimate $\hat{u}$ are both available. They are not terms in the optimisation objective $\mathcal{L}$ of Section~\ref{sec:loss_constraints}.
+
+For vectorised images of length $n$ with dynamic range $[0,L]$ (e.g.\ $L=1$ after normalisation or $L=255$ for 8-bit storage), the mean squared error is
+\begin{equation}
+\label{eq:app_mse}
+\mathrm{MSE}(u,\hat{u}) = \frac{1}{n}\sum_{k=1}^{n}(u_k-\hat{u}_k)^2.
+\end{equation}
+The peak signal-to-noise ratio in decibels is
+\begin{equation}
+\label{eq:app_psnr}
+\mathrm{PSNR}(u,\hat{u}) = 10\log_{10}\!\left(\frac{L^2}{\mathrm{MSE}(u,\hat{u})}\right),
+\end{equation}
+with the convention $\mathrm{PSNR}=+\infty$ if $\mathrm{MSE}=0$. PSNR is a monotone function of MSE for fixed $L$; reporting both on the same pair $(u,\hat{u})$ is redundant unless raw MSE is needed for statistical analysis.
+
+For comparison with the SSIM-based objective, full-reference SSIM$(\hat{u},u)$ (pooled over patches as in \eqref{eq:ssim_global_mean}) is the primary perceptual score; PSNR remains useful as a classical baseline cited alongside prior work.

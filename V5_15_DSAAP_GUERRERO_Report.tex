@@ -1,0 +1,506 @@
+\documentclass[english,a4paper,11pt]{article}
+\usepackage{geometry} % actual margins set in assignment.sty via \geometry (manual lengths there override package options)
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{centernot}
+\usepackage{textcomp}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algcompatible}
+\usepackage{algpseudocode}
+\usepackage{calligra} % poetic text font
+\usepackage[T1]{fontenc} %poetic text font
+\usepackage{varwidth}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{epstopdf}
+\usepackage{tikz}
+\usepackage{colortbl}
+\usepackage{color,soul}
+\usepackage{placeins}% to avoid floating figures use \FloatBarrier before and after section
+\usepackage{transparent} % add transparency to colors
+\usepackage{listings} % Code format
+\usepackage{lmodern}  % for bold teletype font
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{pdfpages} % insert pdf files
+\usepackage{overpic} 
+\usepackage[edges]{forest} %creates diagram as a tree
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+%%% plots package https://www.overleaf.com/learn/latex/Pgfplots_package
+
+\setlength{\parindent}{0pt} %remove indent latex
+
+% Theorem and definitions
+% https://www.overleaf.com/learn/latex/Theorems_and_proofs
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=fullflexible,
+  frame=single,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\usetikzlibrary{positioning,shadows,arrows,trees,shapes,fit}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{hyphenat}
+\usepackage{hyperref} 	% bibliographic references will be red
+	\hypersetup{
+		colorlinks=true,                                       	
+		linkcolor=blue,						% Footnotes, Figure legend, Section will be Blue
+		citecolor=blue,
+		urlcolor=blue,		%teal					% url links will be teal
+				} %in case you want to add specific colors to links
+\usepackage{multirow}
+\usepackage[font=scriptsize,labelfont=bf]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[toc,page]{appendix}
+\usepackage{url}
+\usepackage{subcaption}
+\usepackage{multicol} %For tables
+\usepackage{xcolor} % highlight and color
+% Tighten vertical space before headings by 0.5em (article.cls defaults: 3.5ex / 3.25ex)
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {\dimexpr -3.5ex+0.5em\relax \@plus -1ex \@minus -.2ex}%
+                                   {\dimexpr 2.3ex-0.3em\relax \@plus.2ex}%
+                                   {\normalfont\Large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {\dimexpr -3.25ex+0.5em\relax \@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\large\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {\dimexpr -3.25ex+0.5em\relax \@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\makeatother
+% \usepackage[bottom,hang]{footmisc}
+\pgfplotsset{compat = 1.3}
+%\pgfplotsset{width=7cm,compat=1.12}
+
+\newcommand*\justify{%
+  \fontdimen2\font=0.4em% interword space
+  \fontdimen3\font=0.2em% interword stretch
+  \fontdimen4\font=0.1em% interword shrink
+  \fontdimen7\font=0.1em% extra space
+  \hyphenchar\font=`\-% allowing hyphenation
+}
+
+\usepackage{courier}
+\newcommand{\codefont}{\colorbox{lightgray}}
+
+\setlength{\columnsep}{7mm}  % Two columns -> Gap between columns
+
+\usepackage{mdframed}
+\newmdtheoremenv{theo}{Theorem} % to write theorems use \begin{teo}
+
+%\let\OLDthebibliography\thebibliography
+%\renewcommand\thebibliography[1]{
+%  \OLDthebibliography{#1}
+%  \setlength{\parskip}{0pt} %space between lines
+%  \setlength{\itemsep}{4.9pt} %space between items (bulletpoints)
+%}
+%
+%{\fontsize{11pt}{0pt}\selectfont
+%\bibliographystyle{bibstyle}
+%\bibliography{bibliography} % bibliography.bib
+%}
+
+% =========================================
+% Programming font
+% =========================================
+
+
+\usepackage{tcolorbox} % For creating colored boxes
+%\usepackage{ulem} % For underlining text
+
+\newcommand{\gggg}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{1pt}% Adjust padding inside the box
+    \setlength{\fboxrule}{0pt}% No border
+    \hspace{0pt}% Prevent spacing issues
+    \rlap{\colorbox{black!20}{\hspace{1.5pt}\raisebox{-0.2ex}{\phantom{\texttt{#1}}}}}% Shadow on the right
+    \colorbox{gray!8}{\texttt{#1}}%
+    \endgroup
+}
+
+% =========================================
+% LISTINGS
+% =========================================
+
+%fontsize:  *********
+%\newcommand{\fontListings}{\tiny \ttfamily}  %basicstyle=\footnotesize \ttfamily,
+\newcommand{\fontListings}{\footnotesize \ttfamily}  %basicstyle=\footnotesize \ttfamily,
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+% CODE IN JAVA: Reference: https://tex.stackexchange.com/questions/437646/lstlisting-format-java-code 
+\lstset{
+tabsize = 4, %% set tab space width
+showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+numbers = left, %% display line numbers on the left
+commentstyle = \color{blue}, %% set comment color
+keywordstyle = \color{blue}, %% set keyword color
+stringstyle = \color{blue}, %% set string color
+rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+%basicstyle = \small \ttfamily , %% set listing font and size
+basicstyle = \fontListings, %% set listing font and size
+breaklines = true, %% enable line breaking
+numberstyle=\tiny\color{mGray},
+}
+
+% CODE IN C: https://tex.stackexchange.com/questions/348651/c-code-to-add-in-the-document
+
+\lstdefinestyle{CStyle}{
+    tabsize = 4, 
+    backgroundcolor=\color{white},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{blue} \textbf,
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+%    basicstyle=\footnotesize \ttfamily,
+    basicstyle=\fontListings, %\tiny \ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\lstdefinestyle{study}{
+    backgroundcolor=\color{white},   
+    commentstyle=\color{brown},
+    keywordstyle=\color{blue} \textbf,
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize \ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4,
+    language=C
+}
+
+\lstdefinestyle{carzaniga}{
+    tabsize = 4, 
+    backgroundcolor=\color{white},   
+    commentstyle=\color{blue},
+    keywordstyle=\color{black} \textbf,
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle= \fontListings                                                                           
+}
+
+\lstdefinestyle{terminal}{
+    tabsize = 4, 
+    backgroundcolor=\color{white},  
+    commentstyle=\color{red},
+    keywordstyle=\color{black} \textbf,
+    numberstyle=\tiny\color{black},
+    stringstyle=\color{black},   
+    basicstyle= \small \ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+
+
+% For pretty boxes with color gray 
+%% use it by  \begin{shaded} addtexthere \end{shaded}
+\usepackage{framed}
+\renewenvironment{shaded}{%
+  \def\FrameCommand{\fboxsep=\FrameSep \colorbox{shadecolor}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore\FrameRestore}}%
+ {\endMakeFramed}
+\definecolor{shadecolor}{gray}{0.75}
+
+% =========================================
+% Definitions  in https://arxiv.org/abs/2202.08455
+% =========================================
+
+
+\def\C{{\cal C}}
+\def\S{{\cal S}}
+\def\E{{\mathbb E}}
+\def\X{{\cal X}}
+\def\Y{{\cal Y}}
+\def\H{{\mathbb  H}}
+\def\Z{{\mathbb Z}}
+\def\L{{\cal L}}
+\def\N{{\cal N}}
+
+\def\cone{{\cal K}}
+
+%\def\A{{\mathscr A}}
+\def\M{{\cal M}}
+\def \I {{\cal{I}}}
+\def\T {\mathbb{T}}
+\def\opt{\ensuremath{\Omega^*}}
+\def\optcont{\ensuremath{\x^*}}
+\newcommand{\opti}[1]{x^*_{#1}} % ith entry of opt, used
+% in double greedy proof
+
+% bold small letters
+\def \c{\mathbf{c}}
+\def \v{\mathbf{v}}
+\def \w{\mathbf{w}}
+\def \r{\mathbf{r}}
+\def \a{\mathbf{a}}
+\def \b{\mathbf{b}}
+\def \d{\mathbf{d}}
+\def \x{\mathbf{x}}
+\def \y{\mathbf{y}}
+\def \s{\mathbf{s}}
+\def \e{\mathbf{e}}
+\def \u{\mathbf{u}}
+\def \bmu{\mathbf{u}}
+\def \t{\mathbf{t}}
+\def \z{\mathbf{z}}
+\def \h{\mathbf{h}}
+\def \bu{\mathbf{u}}
+\def \q{\mathbf{q}}
+\def \k{\mathbf{k}}
+\def \v{\mathbf{v}}
+\def \f{\mathbf{f}}
+\def \n{\mathbf{n}}
+\def \g{\mathbf{g}}
+
+\def \BO{\mathbf{O}}
+\def \BK{\mathbf{K}}
+\def \BA{\mathbf{A}}
+\def \BB{\mathbf{B}}
+\def \BX{\mathbf{X}}
+\def \BY{\mathbf{Y}}
+\def \BI{\mathbf{I}}
+\def \BC{\mathbf{C}}
+\def \BD{\mathbf{D}}
+\def \BE{\mathbf{E}}
+\def \BH{\mathbf{H}}
+\def \BL{\mathbf{L}}
+\def \BM{\mathbf{M}}
+\def \BG{\mathbf{G}}
+\def \BP{\mathbf{P}}
+\def \BQ{\mathbf{Q}}
+\def \BR{\mathbf{R}}
+\def \BS{\mathbf{S}}
+\def \BU{\mathbf{U}}
+\def \BV{\mathbf{V}}
+\def \BW{\mathbf{W}}
+\def \BZ{\mathbf{Z}}
+% compatibable with aistats
+\def \bmA{\mathbf{A}}
+\def \bmH{\mathbf{H}}
+\def \bmL{\mathbf{L}}
+\def \bmX{\mathbf{X}}
+\def \bmY{\mathbf{Y}}
+\def \bmI{\mathbf{I}}
+\def \bmW{\mathbf{W}}
+\def \bmZ{\mathbf{Z}}
+
+
+\def \BLambda{\mathbf{\Lambda}}  % B or b, depend on the first letter of the symbol
+\def \BSigma{\mathbf{\Sigma}}
+\def \bsigma{\bm{\sigma}}
+\def \btheta{\bm{\theta}}
+\def \blambda{\bm{\lambda}}
+\def \balpha{\bm\alpha}
+\def \bphi{\bm{\phi}}
+
+
+\def \bmsigma{\bm{\sigma}}
+\def \bmtheta{\bm{\theta}}
+\def \bmlambda{\bm{\lambda}}
+\def \bmalpha{\bm\alpha}
+\def \bmphi{\bm{\phi}}
+\def \bmchi{\bm{\chi}}
+
+
+\def \P{{\cal{P}}}
+\def \Q{{\cal{Q}}}
+\def \W{{\cal{W}}}
+\def \B{{\cal{B}}}
+\def \R{{\mathbb{R}}}
+%  the transpose
+\def \trans{\top}
+% trace
+\newcommand{\tr}[1]{\text{tr}(#1)}
+\newcommand{\pare}[1]{{#1}}  % parethese sth, with extra {} added, used in a
+% math mode
+
+
+\def \D{{\cal{D}}}
+\def \V{{\cal{V}}}
+\def \E{{\mathbb{E}}} %  expection
+
+%\usepackage{natbib} %references tcite
+% ===============END==========================
+
+% #################################################
+%                       Template and policies import
+% #################################################
+\input{assignment.sty}
+
+
+% #################################################
+%                        BEGIN DOCUMENT
+% #################################################
+
+\begin{document}
+\pagestyle{empty}% hide page numbers on title and nomenclature; Arabic page numbering starts at \texttt{1\_definitions.tex}
+
+% ==============================================
+%  First page
+% ==============================================
+\setassignment
+\setduedate{\today}
+
+\serieheader{\small{V5\_15  Developing Software as a Product SS26}}
+{\\ \\ 
+GDPR\_Anonymizer
+}
+{}{}{\normalsize\textbf{Authors:} {\normalsize 
+GUERRERO-TORO Cindy\footnotemark[1], 
+\footnotetext[1]{Master's in Life Sciences. Zürcher Hochschule für Angewandte Wissenschaften (ZHAW), Wädenswil, Switzerland. Major in Applied Computational Life Sciences}
+} 
+}{}
+\newline
+
+
+\copyrightpolicy
+
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+%.                             CONTENTS                                %
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+
+%\newpage
+%\thispagestyle{empty}
+%%\addtocontents{toc}{\setcounter{tocdepth}{1}} % Set depth to 1
+%\tableofcontents
+
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+%.                             CHAPTERS                                %
+% - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - %
+\newpage
+\input{sections/0_nomenclature.tex}
+\clearpage
+\pagestyle{plain}
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+
+\input{sections/0template}
+
+\newpage
+\input{sections/99_references.tex} 
+
+%%\include{sections/99_references} 
+
+
+%%\input{sections/3_discussion.tex}
+%%\newpage
+%%
+%%{
+%%\color{red} \Huge \section*{\colorbox{yellow}{{ USE THIS INFO in color FOR THE PRESENTATION}}}
+%%\vspace{-1em}
+%%\color{red} \Huge \section*{\colorbox{yellow}{{ OR YOUR IMPLEMENTATION }}}
+%%\vspace{-1em}
+%%}
+%%{\color{blue}\input{sections/2_ae.tex}}
+%%\newpage
+%%{\color{cyan}\input{sections/2_ga.tex}}
+%%\newpage
+%%{\color{magenta}\input{sections/2_pso.tex}}
+%%
+%%\appendix
+%%\input{sections/9_apppendix.tex}
+%%
+%%\include{sections/99_references} 
+
+
+
+
+
+
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[width=0.4\textwidth]{images/2_knn_flowchart}
+%\caption{\textbf{KNN algorithm.} A flowchart explaining the $k$NN algorithm}
+%\label{fig_knnalgorithm}
+%\end{figure}
+
+
+%Use accuracy for balanced datasets where both classes are equally important.
+%Use precision, recall, and F1-score for imbalanced datasets or when specific error types are more critical.
+%Use IoU or Dice coefficient in segmentation tasks to evaluate mask quality.
+%Use AUC-ROC when thresholds and class separation matter.
+
+
+
+% https://www.mercity.ai/blog-post/building-medical-ai-assistants-with-visual-llms
+% MEDITRON https://github.com/epfLLM/meditron?tab=readme-ov-file
+
+%%%%% THIS IS THE ARTICLE
+% https://arxiv.org/pdf/2303.00915v2
+% https://github.com/microsoft/BiomedCLIP_data_pipeline/blob/main/README.md
+% https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224
+% EXAMPLE: https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224/blob/main/biomed_clip_example.ipynb
+
+
+% \includepdf[scale=0.90, nup=2x2, pages={1-4}, 
+% 	pagecommand= \section{Assignment 1: pngq.c} \label{SP_assignment1_2023},
+%	offset=-0.0in -0.50in 0.0in 0.0in,
+%	delta=-0.25in -0.45in]{
+%	pdfs/lorem.pdf
+%	}
+
+\end{document} 
