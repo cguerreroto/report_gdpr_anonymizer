@@ -1,18 +1,24 @@
 \section{Conclusions and outlook}
 \label{sec:conclusions}
 
-\subsection{What was achieved}
+\paragraph{What was achieved}
 
-The project closes a practical gap between raw video and shareable footage. \texttt{gdpr\_anonymizer} is a single public repository that reads an MP4 file, trains or applies a segmentation model locally, and writes a blurred MP4 while keeping datasets and weights off the remote \cite{RepoGDPR}. The Python extractor and Rust segmentator derive from upstream tooling \cite{DecrypheExtractor,DecrypheSegmentator}. The work reported here is the \texttt{ml\_pipeline} layer that connects labelling, training, validation, and blur into one repeatable command-line path instead of a chain of external tools.
+Researchers who share video footage online often face an awkward choice. They can redact sensitive regions by hand, adopt commercial tools that solve the full problem at substantial cost, or rely on software that addresses only one part of it. This project aimed to remove that split. The outcome is \texttt{gdpr\_anonymizer}, a public repository that accepts a video file, keeps datasets and weights on the operator's machine, and returns a blurred output through a documented sequence of local commands \cite{RepoGDPR}.
 
-To the author's knowledge, few open repositories cover that end-to-end path for both persons and vehicles in one place. Many strong alternatives are proprietary, costly, or limited to detection boxes rather than instance masks. Mask-based blur follows object contours and avoids the oversized rectangles that look poor on faces and plates in social-media video. Trials on short clips with a modest label set already produced convincing output. Further annotation should yield a stronger reusable checkpoint without altering the pipeline structure.
+The repository did not begin as an empty codebase. It inherits a Python extractor and a Rust segmentator from upstream tooling \cite{DecrypheExtractor,DecrypheSegmentator}. The contribution described in the preceding chapters is the \texttt{ml\_pipeline} package, which links labelling, training, validation, and blur into one repeatable path. That integration is the central engineering result. Before it existed, even well-labelled frames still depended on external training scripts and improvised anonymisation steps.
 
-\subsection{Validation in practice}
+Once those stages were connected, the project also addressed a broader accessibility gap. To my knowledge, few open repositories publish the full journey from raw video to mask-based blur for both persons and vehicles. Strong commercial products exist, but they are often closed, costly, or limited to bounding-box redaction. Segmentation masks follow object contours and therefore obscure faces and plates more cleanly than oversized rectangles, which is particularly visible in social-media footage. Early trials on short clips with a modest label set already produced convincing blur, which suggests that richer annotation should strengthen a reusable checkpoint without redesigning the workflow.
 
-The system works better than initially expected. Small labelled samples were enough to reach usable validation quality and acceptable blur on clips of several thousand frames. Performance still scales with data diversity and polygon accuracy, yet \texttt{gdpr-yolo-iterate} and error analysis make it possible to improve a model incrementally rather than begin again from scratch. Execution remains local throughout. A GPU shortens runtime but is not a prerequisite.
+\paragraph{Validation in practice}
 
-\subsection{Outlook}
+Design completeness, however, is not the same as practical reliability. The decisive question was therefore whether the pipeline would behave acceptably on real footage. It did, and more consistently than initially expected. Small labelled samples were enough to reach usable validation quality, and blur remained acceptable on clips of several thousand frames.
 
-The most visible limitation is temporal flicker when masks shift between consecutive frames. When stable segment coordinates appear in frames separated by a short gap, intermediate frames could inherit the same geometry before blur is applied. That change would fit the existing per-frame architecture.
+Those results do not imply that quality has reached a ceiling. Accuracy still depends on label diversity and polygon precision, as in any supervised segmentation project. What changed is the cost of improvement. Warm-started iteration and error analysis allow the operator to refine labels and retrain without discarding earlier progress. Execution also remained local throughout the evaluation. A GPU shortened runtime, but it was never a prerequisite for running the toolchain.
 
-Further gains depend chiefly on labelling: sharper polygons on difficult faces and plates, and broader training material across pedestrians, plate types, and countries. Assisted region selection in the segmentator would reduce manual effort and improve boundary precision. These steps would extend the current design rather than replace it.
+\paragraph{Outlook}
+
+The remaining limitations follow directly from that success. The most visible is temporal flicker. When masks shift abruptly between neighbouring frames, blur appears unstable even though each frame is handled correctly in isolation. A natural extension is to propagate stable segment geometry across short frame gaps before applying the existing blur stage. That change would preserve the current per-frame architecture rather than replace it.
+
+Model quality will likewise continue to reflect annotation effort. Sharper polygons on difficult faces and plates, together with broader training material across pedestrians, plate styles, and countries, will matter more than any isolated code change. Assisted region selection in the segmentator could reduce the manual burden and improve boundary precision. Each of these directions builds on the foundation already in place.
+
+The project began with a simple requirement: sensitive video should be shareable without sending private data elsewhere. It ends with a local path from ingest to anonymised output and with evidence that modest labels can already produce useful blur. \texttt{gdpr\_anonymizer} is offered openly so that others can extend that path when their footage, and their responsibility, demand the same care.
