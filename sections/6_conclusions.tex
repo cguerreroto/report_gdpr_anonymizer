@@ -13,7 +13,7 @@ Once those stages were connected, the project also addressed a broader accessibi
 
 Design completeness, however, is not the same as practical reliability. The decisive question was therefore whether the pipeline would behave acceptably on real footage. It did, and more consistently than initially expected. Small labelled samples were enough to reach usable validation quality, and blur remained acceptable on clips of several thousand frames.
 
-Those results do not imply that quality has reached a ceiling. Accuracy still depends on label diversity and polygon precision, as in any supervised segmentation project. What changed is the cost of improvement. Warm-started iteration and error analysis allow the operator to refine labels and retrain without discarding earlier progress. Execution also remained local throughout the evaluation. A GPU shortened runtime, but it was never a prerequisite for running the toolchain.
+Those results do not imply that quality has reached a ceiling. Accuracy still depends on label diversity and polygon precision, as in any supervised segmentation project. What changed is the cost of improvement. Warm-started iteration and error analysis allow the operator to refine labels and retrain without discarding earlier progress. Execution also remained local throughout the evaluation. A GPU shortened training and blur runtime, but it was never a prerequisite: the full pipeline ran on a conventional workstation and still delivered usable validation scores and convincing blur on long clips, which is remarkable for an end-to-end video anonymisation workflow.
 
 \paragraph{Outlook}
 
