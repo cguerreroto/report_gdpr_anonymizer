@@ -15,11 +15,11 @@ These targets answer different questions. \texttt{make test} invokes \texttt{pyt
 
 \subsection{Coverage evolution in three phases}
 
-Coverage was measured at three repository states by running the same \texttt{pytest --cov} commands after checking out each milestone. Cover1 marks the initial suite with \texttt{pytest-cov} wired (205 Python tests). Cover2 marks the expanded unit-test set immediately before systematic mocking of heavy imports (350 Python tests). Cover3 marks the current tree after mock-based tests closed remaining gaps (417 Python tests).
+Coverage was measured at three repository states by running the same \texttt{pytest --cov} commands after checking out each milestone. Cover1 marks the initial suite with \texttt{pytest-cov} wired (205 Python tests). Cover2 marks the expanded unit-test set immediately before systematic mocking of heavy imports (350 Python tests). Cover3 marks the current tree after mock-based tests closed remaining gaps (417 Python tests). The aggregate counts and package totals for these phases are listed in Table~\ref{tab:coverage_summary}.
 
 At Cover1, package totals were 82\% for \texttt{ml\_pipeline} and 41\% for the extractor. Modules that depend on OpenCV or Ultralytics, especially \texttt{video.py} at 55\%, remained largely untested because the dev install omits those dependencies. Cover2 raised totals to 90\% and 89\% through broader CLI and driver tests with stub factories, but \texttt{video.py} stayed at 60\% because real \texttt{cv2} and \texttt{numpy} imports were still avoided. Cover3 applied standard-library \texttt{unittest.mock} patterns together with \texttt{monkeypatch} to register lightweight fake modules before lazy imports run. Package totals reached 97\% while \texttt{video.py} rose to 95\% and \texttt{validate.py} to 99\%, without adding GPU hardware or binary fixtures to the repository.
 
-Table~\ref{tab:coverage_summary} summarises package-level results. Module-level percentages for both Python packages are listed in Appendix~\ref{app:coverage_tables}. Rows with the largest Cover2 to Cover3 gains (\texttt{video.py}, \texttt{validate.py}, \texttt{cli\_dataset\_yaml.py}, \texttt{export.py}) correspond to code paths that were previously reachable only when optional ML stacks were installed.
+Table~\ref{tab:coverage_summary} summarises package-level results. Module-level percentages for \texttt{ml\_pipeline} and the extractor appear in Tables~\ref{tab:coverage_ml_pipeline} and~\ref{tab:coverage_extractor} (Appendix~\ref{app:coverage_tables}). Rows with the largest Cover2 to Cover3 gains (\texttt{video.py}, \texttt{validate.py}, \texttt{cli\_dataset\_yaml.py}, \texttt{export.py}) correspond to code paths that were previously reachable only when optional ML stacks were installed.
 
 \begin{table}[htbp]
 \centering
@@ -37,4 +37,4 @@ Cover3 (after mocking) & 417 & 97\% & 97\% & 95\% & 99\% \\
 \label{tab:coverage_summary}
 \end{table}
 
-The Rust segmentator suite is not included in \texttt{make coverage}. All suites pass under \texttt{make test} on the current tree.
+The Rust segmentator suite is not included in \texttt{make coverage}. All suites pass under \texttt{make test} on the current tree. The per-module statement counts underlying Table~\ref{tab:coverage_summary} are given in Tables~\ref{tab:coverage_ml_pipeline} and~\ref{tab:coverage_extractor}.
