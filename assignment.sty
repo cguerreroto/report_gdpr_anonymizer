@@ -21,7 +21,7 @@
 % Abbreviation list (same entries as sections/0_nomenclature.tex), for the title-page table.
 \newcommand{\reportnomenclaturetable}{%
 {\footnotesize
-\begin{tabular}{@{}p{3.6cm}p{12cm}@{}}
+\begin{tabular}{@{}p{2cm}p{12cm}@{}}
 \multicolumn{2}{@{}l}{\textit{Abbreviations}} \\[0.35em]
 AAA & Arrange--act--assert: a unit-test structure that separates setup, execution, and assertions. \\
 CI/CD & Continuous integration and continuous delivery: automated build and test on each change. \\
@@ -68,11 +68,17 @@ egui & Immediate-mode GUI library used by the Rust segmentator. \\
 \multicolumn{2}{|c|}{\large\textbf{A toolchain for video privacy preservation.}}\\
 %\multicolumn{2}{|c|}{\large\textbf{Abstract}}\\
 &\\
-\textbf{Project}\\
 &
-\noindent\textbf{Note:} The current repository of this project can be found on: \url{https://github.com/cguerreroto/gdpr_anonymizer}
+\noindent This project is a local toolchain for video privacy: it trains a YOLO26 segmentation model on labelled masks and blurs persons and vehicles in each frame.
+\noindent Frame extraction, annotation, training, validation, and MP4 output run on the host machine through explicit CLI tools.
+\par\medskip
+\noindent\textbf{Note:} The current repository of this project can be found on:\newline \url{https://github.com/cguerreroto/gdpr_anonymizer}
 \par\medskip
 \reportnomenclaturetable
+\par\medskip
+{\footnotesize
+\noindent\textbf{Disclosure on the use of GAI tools:} The author has used \href{https://www.grammarly.com/}{Grammarly} for spell and grammar checking, and sometimes vscode autocompletion for spelling and code formatting.
+}
 \\
 
 \hline
