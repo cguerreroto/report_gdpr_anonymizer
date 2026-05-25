@@ -12,4 +12,13 @@ The toolchain addresses a practical need in audiovisual research: sensitive regi
   \label{fig:pipeline14steps}
 \end{figure}
 
-Figure~\ref{fig:pipeline14steps} summarises the fourteen ordered stages from raw video to anonymised output. Steps~1--4 prepare data: frames are extracted, polygons are drawn in the desktop segmentator, segment crops are harvested for augmentation after labelling, and an augmented dataset copy is built. Steps~5--6 audit label layout and \texttt{dataset.yaml}. Steps~7--11 cover training, validation, error analysis, still-image prediction, and checkpoint export. Steps~12--14 deliver video blur, dataset or run-folder cleaning, and warm-started training iteration with metric comparison. Command names, flags, and worked examples are documented in the public repository README\footnote{\url{https://github.com/cguerreroto/gdpr_anonymizer/blob/main/README.md}}.
+Figure~\ref{fig:pipeline14steps} summarises the fourteen ordered stages from raw video to anonymised output. Steps~1--4 prepare data: frames are extracted, polygons are drawn in the desktop segmentator, segment crops are harvested for augmentation after labelling, and an augmented dataset copy is built. Steps~5--6 audit label layout and \texttt{dataset.yaml}. Steps~7--11 cover training, validation, error analysis, still-image prediction, and checkpoint export. Steps~12--14 deliver video blur, dataset or run-folder cleaning, and warm-started training iteration with metric comparison.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{images/0_program_execution_scheme_manual.pdf}
+  \caption{Program execution scheme for \texttt{gdpr\_anonymizer}. Solid arrows denote required process order; dashed arrows denote local artifact handoffs between stages; dotted arrows mark optional or feedback paths. Coloured phase bands group commands by package and runtime host (Python~3.13 extractor, Rust segmentator, Python~3.11 \texttt{ml\_pipeline}).}
+  \label{fig:programexecscheme}
+\end{figure}
+
+Figure~\ref{fig:programexecscheme} maps the same workflow onto concrete CLI entry points and their runtime dependencies. Command names, flags, and worked examples are documented in the public repository README\footnote{\url{https://github.com/cguerreroto/gdpr_anonymizer/blob/main/README.md}}.
